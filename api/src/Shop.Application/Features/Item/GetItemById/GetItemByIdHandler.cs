@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Ardalis.Result;
 
 namespace Shop.Application.Features.Item.GetItemById
 {
-    internal class GetItemByIdHandler
+    public class GetItemByIdHandler : IRequestHandler<GetItemByIdRequest, Result<ItemResponse>>
     {
+        // context here
+        public Task<Result<ItemResponse>> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

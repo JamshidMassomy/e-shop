@@ -1,5 +1,4 @@
 ﻿
-﻿using Ardalis.Result;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,37 +13,19 @@ namespace Boilerplate.Api.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
-[Authorize]
-public class UserController : ControllerBase
+public class AuthController : ControllerBase
 {
-    private readonly ISession _session;
+
     private readonly IMediator _mediator;
 
-    public UserController(ISession session, IMediator mediator)
+    public AuthController(IMediator mediator)
     {
-        _session = session;
         _mediator = mediator;
     }
 
     [HttpGet]
     [AllowAnonymous]
-    [Route("GetMyRequest")]
-    public String GetMyRequest()
-    {
-        return "I am doing great!";
-
-    }
-
-    [HttpGet("LockedRout")]
-    [Authorize]
-    public String GetMyLockedRoute()
-    {
-        return "I am doing great!";
-
-    }
-
-
-    [HttpGet("login-with-google")]
+    [Route("login")]
     public async Task LoginWithGoogle()
     {
         await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
@@ -54,7 +35,9 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpGet("google-response")]
+    [HttpGet]
+    [Route("google-response")]
+    [AllowAnonymous]
     public async Task<IActionResult> GoogleResponse()
     {
         var request = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -64,31 +47,20 @@ public class UserController : ControllerBase
             return Ok(jwtToken.Value);
         } else
         {
-            Unauthorized();
+           return Unauthorized();
         }
         
-        return Ok("jwt token here");
     }
-    
 
 
-    /// <summary>
-    /// Authenticates the user and returns the token information.
-    /// </summary>
-    /// <param name="request">Email and password information</param>
-    /// <returns>Token information</returns>
-    [HttpPost]
-    [Route("login")]
+    [HttpGet]
     [AllowAnonymous]
-    // [TranslateResultToActionResult]
-    // [ExpectedFailures(ResultStatus.Invalid)]
-    public async Task<Result<Jwt>> Authenticate([FromBody] AuthenticateRequest request)
+    [Route("logout")]
+    public async Task<IActionResult> Logout()
     {
-        var jwt = await _mediator.Send(request);
-        return jwt;
+        await HttpContext.SignOutAsync();
+        return Redirect("/");
     }
 
-  
-
-
+    
 }

@@ -3,6 +3,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Api.Common;
 using Shop.Application.Auth;
@@ -11,7 +13,7 @@ using System.Text;
 
 namespace Boilerplate.Api.Configurations;
 
-public static class AuthSetup
+public static class AuthenticationConfig
 {
     public static IServiceCollection AddAuthSetup(this IServiceCollection services, IConfiguration configuration)
     {
@@ -27,15 +29,13 @@ public static class AuthSetup
 
         services.AddAuthentication(options =>
         {
-            options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            // options.DefaultScheme = GoogleDefaults.AuthenticationScheme;
-            options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         })
             .AddGoogle(config =>
             {
-                // config.SignInScheme = GoogleDefaults.AuthenticationScheme;
                 config.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                config.AuthorizationEndpoint += "?prompt=consent"; // Hack so we always get a refresh token, it only comes on the first authorization response
+                config.AuthorizationEndpoint += "?prompt=consent"; 
                 config.AccessType = "offline";
                 config.SaveTokens = true;
                 config.CallbackPath = "/signin-google";
@@ -45,6 +45,19 @@ public static class AuthSetup
             .AddJwtBearer(x =>
             {
 
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = appSettings.Issuer,
+                    ValidAudience = appSettings.Audience,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+                /*
                 x.SecurityTokenValidators.Clear();
                 x.SecurityTokenValidators.Add(new GoogleTokenValidator());
 
@@ -60,6 +73,7 @@ public static class AuthSetup
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
+                */
             }).
             AddCookie(o => o.LoginPath = new PathString("/login"));
         #endregion

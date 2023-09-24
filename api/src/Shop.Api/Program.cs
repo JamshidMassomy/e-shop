@@ -1,9 +1,11 @@
+
 using Boilerplate.Api.Configurations;
+using Microsoft.AspNetCore.Diagnostics;
 using Shop.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+// builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
-// Add services to the container.
 
 
 

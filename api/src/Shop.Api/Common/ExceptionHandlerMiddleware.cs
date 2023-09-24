@@ -1,16 +1,12 @@
 ﻿
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Diagnostics;
+using Ardalis.Result;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace Boilerplate.Api.Common;
+namespace Shop.Api.Common;
 
-public class ExceptionHandlerMiddleware //: IMiddleware
+public class ExceptionHandlerMiddleware : IMiddleware
 {
-    /*
+    
     private readonly ILogger<ExceptionHandlerMiddleware> _logger;
 
     public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger)
@@ -26,7 +22,9 @@ public class ExceptionHandlerMiddleware //: IMiddleware
         }
         catch (Exception ex)
         {
-            var exception = ex.Demystify();
+            // var exception = ex.Demystify();
+            var exception = ex;
+
             _logger.LogError(exception, "An error ocurred: {Message}", exception.Message);
             HttpStatusCode code;
             switch (exception)
@@ -38,9 +36,11 @@ public class ExceptionHandlerMiddleware //: IMiddleware
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
-            var result = Result.Error(exception.ToStringDemystified());
+            var result = Result.Error(exception.Message);
+            // var result = Result.Error(exception.ToStringDemystified());
+
             await context.Response.WriteAsJsonAsync(result);
         }
     }
-    */
+    
 }

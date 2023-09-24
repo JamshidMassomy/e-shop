@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Ardalis.Result;
+using MediatR;
 
 namespace Shop.Application.Features.Item.DeleteItem
 {
-    internal class DeleteItemHandler
+    public class DeleteItemHandler : IRequestHandler<DeleteItemRequest, Result>
     {
+        // context
+        public DeleteItemHandler() { }
+
+        public Task<Result> Handle(DeleteItemRequest request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Shop.Domain.Entities.Common;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 namespace Boilerplate.Api.Configurations;
 
-public static class SwaggerSetup
+public static class SwaggerConfiguration
 {
     public static IServiceCollection AddSwaggerSetup(this IServiceCollection services)
     {
@@ -41,16 +42,31 @@ public static class SwaggerSetup
 
             //c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             // c.OperationFilter<SecurityRequirementsOperationFilter>();
- 
-            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
-                Name = "Authorization",
-                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
                 BearerFormat = "JWT",
                 In = ParameterLocation.Header,
-                Description = "Enter your valid token in the text input below.\r\n\r\nExample: \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\"",
+                Name = "Authorization",
+                Description = "Bearer Authentication with JWT Token",
+                Type = SecuritySchemeType.Http
             });
-            
+
+
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                {
+                    new OpenApiSecurityScheme {
+                        Reference = new OpenApiReference {
+                            Id = "Bearer",
+                                Type = ReferenceType.SecurityScheme
+                        }
+                    },
+                    new List < string > ()
+                }
+        });
+
             // Maps all structured ids to the guid type to show correctly on swagger
             var allGuids = typeof(IGuid).Assembly.GetTypes().Where(type => typeof(IGuid).IsAssignableFrom(type) && !type.IsInterface)
                 .ToList();

@@ -1,6 +1,9 @@
-﻿using MediatR;
+﻿using Ardalis.Result;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Application.Features.Item;
+using Shop.Application.Features.Item.CreateItem;
 
 namespace Shop.Api.Controllers
 {
@@ -28,12 +31,12 @@ namespace Shop.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult> SaveItem()
+        public async Task<Result<ItemResponse>> SaveItem([FromBody] CreateItemRequest request)
         {
-            throw new NotImplementedException();
-           
-        }
+            var result = await _mediator.Send(request);
+            return result;
 
+        }
 
         [HttpDelete]
         [Authorize]

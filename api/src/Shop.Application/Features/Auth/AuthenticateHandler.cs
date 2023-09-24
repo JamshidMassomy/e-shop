@@ -47,43 +47,13 @@ namespace Shop.Application.Features.Auth
 
             var claimsIdentity = new ClaimsIdentity(claimEnumerable, "custom");
 
-
-            /*
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == request.Email.ToLower(), cancellationToken);
-            if (user == null || !BC.Verify(request.Password, user.Password))
-            {
-                return Result.Invalid(new List<ValidationError> {
-                new ValidationError
-                {
-                    Identifier = $"{nameof(request.Password)}|{nameof(request.Email)}",
-                    ErrorMessage = "Username or password is incorrect"
-                }
-            });
-            }
-
-            */
-
-
-
-            /*var claims = new ClaimsIdentity(new Claim[]
-            {
-                // new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                // new(ClaimTypes.Email, user.Email),
-                // new(ClaimTypes.Role, user.Role)
-
-                 // new(ClaimTypes.NameIdentifier, request.Claims.FirstOrDefaultAsync(x => x.),
-                 //new(ClaimTypes.Email, user.Email),
-                 //new(ClaimTypes.Role, user.Role)
-
-            });
-            */
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var expDate = DateTime.UtcNow.AddHours(1);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                IssuedAt = DateTime.Now,
                 Subject = claimsIdentity,
                 Expires = expDate,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
@@ -91,11 +61,11 @@ namespace Shop.Application.Features.Auth
                 Issuer = _appSettings.Issuer
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            // var tokenString = tokenHandler.WriteToken(token);
+            var tokenString = tokenHandler.WriteToken(token);
 
             return new Jwt
             {
-                Token = tokenHandler.WriteToken(token),
+                Token = tokenString,
                 ExpDate = expDate
             };
             
