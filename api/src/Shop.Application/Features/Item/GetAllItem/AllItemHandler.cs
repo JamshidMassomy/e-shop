@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Shop.Application.Response
+using Shop.Application.Response;
 
 namespace Shop.Application.Features.Item.GetAllItem
 {
-    internal class GetAllItemHandler : IRequestHandler<GetAllItemRequest, PaginatedList<ItemResponse>>
+    internal class AllItemHandler : IRequestHandler<AllItemRequest, PaginatedList<ItemResponse>>
     {
-        public Task<PaginatedList<ItemResponse>> Handle(GetAllItemRequest request, CancellationToken cancellationToken)
+        public Task<PaginatedList<ItemResponse>> Handle(AllItemRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

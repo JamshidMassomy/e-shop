@@ -3,11 +3,6 @@ using FluentValidation;
 using Ardalis.Result.FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shop.Application.Common.Behaviors
 {
@@ -32,11 +27,6 @@ namespace Shop.Application.Common.Behaviors
 
                 if (!result.IsValid)
                 {
-                    // Reference: https://github.com/amantinband/error-or/issues/10
-                    /* Due to not wanting to use reflection, we assume that every request
-                     * that wants to validate something also returns a result.
-                     * Using implicit casts, we are able to use this same behavior for all of them
-                     */
                     return (TResponse)(dynamic)Result.Invalid(result.AsErrors());
                 }
             }

@@ -1,12 +1,11 @@
-﻿
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Application.Auth;
 using Shop.Application.Features.Auth;
-using ISession = Shop.Domain.Entities.Auth.Interfaces.ISession;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace Boilerplate.Api.Controllers;
 
@@ -24,33 +23,43 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet]
-    [AllowAnonymous]
-    [Route("login")]
-    public async Task LoginWithGoogle()
+    [Route("test")]
+    public String Test()
     {
-        await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
-        {
-            RedirectUri = Url.Action("GoogleResponse")
-        });
+        return "Hi test";
+
+    }
+
+    [HttpGet]
+    [Route("test-locked")]
+    [Authorize]
+    public String TestLocked()
+    {
+        return "Hi test";
+
     }
 
 
-    [HttpGet]
-    [Route("google-response")]
+
+    [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> GoogleResponse()
+    [Route("authenticate-google")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [Consumes("application/json")]
+    public async Task<IActionResult> LoginWithGoogle([FromBody] TokenRequest tokenRequest)
     {
-        var request = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        if (request.Succeeded)
+        if (ValidateAsync(tokenRequest.tokenId, new ValidationSettings()).IsCompletedSuccessfully)
         {
+            var request = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var jwtToken = await _mediator.Send(new AuthenticateRequest { RequestResult = request });
             return Ok(jwtToken.Value);
         } else
         {
-           return Unauthorized();
+            return Unauthorized();
         }
-        
     }
+
 
 
     [HttpGet]
@@ -62,5 +71,4 @@ public class AuthController : ControllerBase
         return Redirect("/");
     }
 
-    
 }

@@ -1,25 +1,54 @@
-import React, { memo } from 'react';
-import GoogleLoginButton from '../../components/google_button/GoogleButton';
+import React, { memo, useState } from 'react';
+import './LoginPageStyles.css';
+import { _fetch } from '../../api/api.config';
+import { GoogleLogin } from '@react-oauth/google';
 
-import './LoginPageStyles.css'
+import jwtDecode from 'jwt-decode';
 
-const LoginPage: React.FC = () => {
-  const handleSuccess = (response: any) => {
-    // Handle successful login (e.g., send token to your server)
-    console.log('Google login success', response);
-  };
+export interface IUserData {
+  name: string;
+  given_name: string;
+  family_name: string;
+  email: string;
+  picture: string;
+}
 
-  const handleFailure = (error: any) => {
-    // Handle login failure
-    console.error('Google login failed', error);
+const LoginPage = () => {
+  const [userData, setUserData] = useState<any>(null);
+
+  const responseGoogle = (response: any) => {
+    const userData = jwtDecode(response?.credential);
+    if (userData) {
+      setUserData(userData);
+    }
+    const options = {
+      method: 'POST',
+      body: { tokenId: response?.credential },
+    };
+
+    _fetch('/Auth/authenticate-google', options).then((data) => {
+      console.log('auth-data', data);
+    });
+
+    console.log('response', response);
   };
 
   return (
-    <div className="login-page">
-      <h1>Login</h1>
-      <GoogleLoginButton onSuccess={handleSuccess} onFailure={handleFailure} />
+    <div className="login-container">
+      {userData ? (
+        <div>
+          <h2>Welcome, {userData?.name}</h2>
+          <p>Email: {userData?.email}</p>
+          <button onClick={() => setUserData(null)}>Logout</button>
+        </div>
+      ) : (
+        <GoogleLogin
+          onSuccess={responseGoogle}
+          onError={responseGoogle}
+        ></GoogleLogin>
+      )}
     </div>
   );
 };
 
-export default memo(LoginPage);
+export default LoginPage;

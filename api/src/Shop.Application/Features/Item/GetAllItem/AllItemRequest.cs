@@ -4,7 +4,7 @@ using Shop.Application.Response;
 
 namespace Shop.Application.Features.Item.GetAllItem
 {
-    public record GetAllItemRequest: PaginatedRequest, IRequest<PaginatedList<ItemResponse>>
+    public record AllItemRequest: PaginatedRequest, IRequest<PaginatedList<ItemResponse>>
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
