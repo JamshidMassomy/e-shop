@@ -30,15 +30,12 @@ root.render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId={OAUTH_CLIENT_ID}>
       <BrowserRouter>
-        {/* <AuthProvider> */}
-        <Router />
-        {/* </AuthProvider> */}
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
       </BrowserRouter>
     </GoogleOAuthProvider>
   </Provider>
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,9 +1,15 @@
-import React, { memo, useState } from 'react';
-import './LoginPageStyles.css';
-import { _fetch } from '../../api/api.config';
-import { GoogleLogin } from '@react-oauth/google';
+// react
+import React, { memo, useEffect } from 'react';
 
-import jwtDecode from 'jwt-decode';
+// hooks
+import { useAuth } from '../../auth/useAuth';
+
+import { _fetch } from '../../api/api.config';
+
+// styles
+import './LoginPageStyles.scss';
+import { GoogleLogin } from '@react-oauth/google';
+import { LABELS } from '../../util/Constants';
 
 export interface IUserData {
   name: string;
@@ -14,41 +20,40 @@ export interface IUserData {
 }
 
 const LoginPage = () => {
-  const [userData, setUserData] = useState<any>(null);
+  const { login } = useAuth();
+  const handleLoginFailer = () => {};
 
-  const responseGoogle = (response: any) => {
-    const userData = jwtDecode(response?.credential);
-    if (userData) {
-      setUserData(userData);
-    }
-    const options = {
-      method: 'POST',
-      body: { tokenId: response?.credential },
-    };
+  useEffect(() => {
+    clearCache();
+  }, []);
 
-    _fetch('/Auth/authenticate-google', options).then((data) => {
-      console.log('auth-data', data);
-    });
+  const clearCache = () => {
+    localStorage.clear();
+    document.cookie = '';
+  };
 
-    console.log('response', response);
+  const handleLogin = (oauthResponse: any) => {
+    login?.(oauthResponse);
   };
 
   return (
-    <div className="login-container">
-      {userData ? (
-        <div>
-          <h2>Welcome, {userData?.name}</h2>
-          <p>Email: {userData?.email}</p>
-          <button onClick={() => setUserData(null)}>Logout</button>
+    <div className="wrapper">
+      <div className="container">
+        <div className="container-col-left">
+          <div className="login-text">
+            <h2>{LABELS.E_SHOPE}</h2>
+            <span>{LABELS.LOGIN_ACCESS_LABEL}</span>
+          </div>
         </div>
-      ) : (
-        <GoogleLogin
-          onSuccess={responseGoogle}
-          onError={responseGoogle}
-        ></GoogleLogin>
-      )}
+        <div className="container-col-right">
+          <div className="login-form">
+            <h2>{LABELS.LOGIN}</h2>
+            <GoogleLogin onSuccess={handleLogin} onError={handleLoginFailer} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default memo(LoginPage);

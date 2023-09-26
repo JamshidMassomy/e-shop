@@ -1,6 +1,9 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+// react
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+
+// hooks
+import { useAuth } from './useAuth';
 
 const PrivateRoute: React.FC<any> = ({ children }) => {
   const { isLoggedIn } = useAuth();

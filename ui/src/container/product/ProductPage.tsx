@@ -1,27 +1,66 @@
-import React from 'react';
+// react
+import React, { memo } from 'react';
+
+// styles & constants
+import './ProductPageStyles.scss';
+import { ITEM_COLUMNS } from '../../util/Constants';
+import Icon from '../../components/icon/Icon';
 
 const ProductPage = () => {
+  const handleCreateItem = async () => {};
+  const handleUpdateItem = async () => {};
+  const handleDeleteItem = async () => {};
+  const handleViewItem = async () => {};
+  const handleQuantityChange = () => {};
+
   return (
-    <>
-      <h1>Product Page</h1>
-      <ul>
-        <li>
-          <span>Product Name: Applue</span>
-          <span>Product Id: 1</span>
-          <span>Product code: 1</span>
-          <span>Product Image: 1</span>
-          <span>Product Action: 1</span>
-        </li>
-        <li>
-          <span>Product Name: Mango</span>
-          <span>Product Id: 2</span>
-          <span>Product code: 2</span>
-          <span>Product Image: 23</span>
-          <span>Product Action: (add, remove)</span>
-        </li>
-      </ul>
-    </>
+    <div className="product-container">
+      <div className="product-table-heading">
+        <button onClick={handleCreateItem}>create item</button>
+        <button>Add to cart</button>
+      </div>
+      <table className="shoppint-cart-table">
+        <thead>
+          <tr>
+            {ITEM_COLUMNS.map((column, index) => {
+              return <th key={index}>{column}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="cart-item">
+            <td>Apple</td>
+            <td>
+              <input
+                className="quantity-input"
+                type="number"
+                value={1}
+                onChange={handleQuantityChange}
+              />
+            </td>
+            <td>{3.33}</td>
+            <td>
+              <button
+                className="update-button"
+                onClick={() => handleUpdateItem}
+              >
+                <Icon icon="edit-icon"></Icon>
+              </button>
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteItem}
+              >
+                <Icon icon="delete-icon"></Icon>
+              </button>
+              <button className="view-button" onClick={() => handleViewItem}>
+                <Icon icon="view-icon"></Icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   );
 };
 
-export default ProductPage;
+export default memo(ProductPage);

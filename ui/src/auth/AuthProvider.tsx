@@ -3,6 +3,8 @@ import React from 'react';
 // redux
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
+import toast, { Toaster } from 'react-hot-toast';
+
 // import { showNotification } from '../action/pageAction';
 import { _fetch } from '../api/api.config';
 
@@ -11,51 +13,49 @@ import { AuthContext } from './AuthContext';
 
 // hook
 import { useLocalStorage } from './useLocalStorage';
-
-export interface IUser {
-  email?: string;
-}
-
-export interface ILogin extends IUser {
-  username: string;
-  apiKey: string;
-}
+import jwtDecode from 'jwt-decode';
+import { IToken } from '../types';
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useLocalStorage('user', null);
-  const [apiKey, setApikey] = useLocalStorage('apikey', null);
 
   const navigate = useNavigate();
   const dispatch: any = useDispatch();
 
   const isLoggedIn = () => {
-    return apiKey !== null && user !== null;
+    return localStorage.getItem('token') !== null;
   };
 
   const handleSuccessfulLogin = () => {
-    navigate('/news');
+    navigate('/');
   };
 
-  const login = async (loginData: ILogin) => {
-    await _fetch('login', loginData)
-      .then(() => {
-        setApikey(loginData?.apiKey || null);
-        setUser(loginData?.username);
+  const login = async (oauthResponse: any) => {
+    const userData: any = jwtDecode(oauthResponse?.credential);
+    const options = {
+      method: 'POST',
+      body: { tokenId: oauthResponse?.credential },
+    };
+
+    _fetch('/Auth/authenticate-google', options)
+      .then((data: IToken | any) => {
+        localStorage.setItem('token', data?.token);
+        localStorage.setItem('user', JSON.stringify(userData));
         handleSuccessfulLogin();
+        toast('sucesfully logged in');
       })
-      .catch(() => {
-        // dispatch(showNotification('Incorrect username or API key')); // faild login
+      .catch((error) => {
+        toast('Something went wrong.', error);
       });
   };
 
   const logout = () => {
     localStorage.clear();
     navigate('/login');
-    setUser(null);
   };
 
   const value: any = {
-    user,
+    //  user,
     login,
     logout,
     isLoggedIn,

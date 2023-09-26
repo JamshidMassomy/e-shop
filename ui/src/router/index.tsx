@@ -11,15 +11,12 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<HomePage />} />
+      {/* <Route path="/" element={<HomePage />} /> */}
       <Route
         path="/"
         element={
           <PrivateRoute>
-            {/* <Navbar />
-            <div className="dashboard-content min-h-fit bg-gray-50">
-              <Outlet />
-            </div> */}
+            <HomePage />
           </PrivateRoute>
         }
       >
