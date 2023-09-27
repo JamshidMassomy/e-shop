@@ -1,8 +1,11 @@
-﻿namespace Shop.Domain.Entities.Item
+﻿using MassTransit;
+using Shop.Domain.Entities.Common;
+
+namespace Shop.Domain.Entities.Item
 {
-    public class Item
+    public class Item: Entity<ItemId>
     {
-        public int Id { get; set; }
+        public override ItemId Id { get; set; } = NewId.NextGuid();
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
         public int Quantity { get; set; }

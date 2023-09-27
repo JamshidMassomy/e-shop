@@ -19,8 +19,8 @@ builder.Services.AddControllers(
         options.AllowEmptyInputInBodyModelBinding = true;
 
     });
-
-
+builder.Services.AddApplicationSetup();
+builder.Services.AddPersistenceSetup(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerSetup();
 builder.Services.AddPersistenceSetup(builder.Configuration);
@@ -51,9 +51,12 @@ app.UseCors("AllowAnyOrigin");
 
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 app.UseHttpsRedirection();
 app.UseSwaggerSetup();
 app.MapControllers();
 
+
+await app.Migrate();
 await app.RunAsync();

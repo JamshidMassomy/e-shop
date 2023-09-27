@@ -16,29 +16,10 @@ public class AuthController : ControllerBase
 {
 
     private readonly IMediator _mediator;
-
     public AuthController(IMediator mediator)
     {
         _mediator = mediator;
     }
-
-    [HttpGet]
-    [Route("test")]
-    public String Test()
-    {
-        return "Hi test";
-
-    }
-
-    [HttpGet]
-    [Route("test-locked")]
-    [Authorize]
-    public String TestLocked()
-    {
-        return "Hi test";
-
-    }
-
 
 
     [HttpPost]
@@ -59,7 +40,6 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
     }
-
 
 
     [HttpGet]

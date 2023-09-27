@@ -1,7 +1,4 @@
-﻿
-
-
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Application.Auth;
@@ -22,11 +19,11 @@ public static class AuthenticationConfig
         var appSettings = tokenConfig.Get<TokenConfiguration>();
         var key = Encoding.ASCII.GetBytes(appSettings!.Secret);
 
-
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            
         })
             .AddGoogle(config =>
             {

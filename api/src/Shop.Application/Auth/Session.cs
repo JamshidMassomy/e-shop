@@ -9,7 +9,7 @@ namespace Shop.Application.Auth
 {
     public class Session : ISession
     {
-        public UserId UserId { get; private init; }
+       //  public UserId UserId { get; private init; }
 
         public DateTime Now => DateTime.Now;
 
@@ -22,7 +22,7 @@ namespace Shop.Application.Auth
             /*if (nameIdentifier != null)
             {
                 UserId = new Guid(nameIdentifier.Value);
-            }*/
+            }
             if (nameIdentifier != null)
             {
                 if (Guid.TryParse(nameIdentifier.Value, out Guid userId))
@@ -35,6 +35,7 @@ namespace Shop.Application.Auth
                     // You can log an error or take other appropriate actions
                 }
             }
+            */
         }
 
     }
