@@ -1,9 +1,10 @@
 const initialState = {
   user: {},
   page: {
+    isDialogActive: false,
     notification: {
       isActive: false,
-      message: "",
+      message: '',
     },
     isLoading: false,
   },

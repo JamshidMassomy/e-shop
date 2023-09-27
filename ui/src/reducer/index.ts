@@ -1,12 +1,11 @@
 import { connectRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { combineReducers } from 'redux';
-
-// import pageReducer from './pageReducer';
+import pageReducer from './PageReducer';
 
 export const history = createBrowserHistory();
 const rootReducer = combineReducers({
-  // page: pageReducer,
+  page: pageReducer,
   router: connectRouter(history),
 });
 

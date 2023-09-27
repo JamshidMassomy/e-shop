@@ -1,65 +1,88 @@
 // react
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 // styles & constants
 import './ProductPageStyles.scss';
-import { ITEM_COLUMNS } from '../../util/Constants';
-import Icon from '../../components/icon/Icon';
+import { _fetch } from '../../api/api.config';
+import { IItem, IResponse, mode } from '../../types';
+import ItemDialog from '../../components/item/item_dialog/ItemDialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { showDialog } from '../../action/pageAction';
+import ItemTable from '../../components/item_table/ItemTable';
 
 const ProductPage = () => {
-  const handleCreateItem = async () => {};
-  const handleUpdateItem = async () => {};
-  const handleDeleteItem = async () => {};
-  const handleViewItem = async () => {};
-  const handleQuantityChange = () => {};
+  const dialogDispatcher = useDispatch();
+  const isDialogActive = useSelector(
+    (state: any) => state?.page.isDialogActive
+  );
+
+  const [itemData, setItemData] = useState<IItem[]>([]);
+  const [activeItem, setActiveItem] = useState<IItem>();
+  const [activeMode, setActiveMode] = useState<mode>();
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const fetchItems = async () => {
+    await _fetch('/Item')
+      .then((data: IResponse | any) => {
+        setItemData(data.result);
+      })
+      .catch((error) => {});
+  };
+
+  const handleCreateItem = async () => {
+    setActiveMode('create');
+    activateDialog();
+    //initlizeItem
+    console.log('adding item');
+  };
+
+  const handleUpdateItem = async (item: IItem) => {
+    setActiveMode('edit');
+    activateDialog();
+    initlizeItem(item);
+    console.log('updating itme', item);
+  };
+
+  const handleDeleteItem = async (item: IItem) => {
+    setActiveMode('delete');
+    activateDialog();
+    initlizeItem(item);
+  };
+
+  const handleViewItem = async (item: IItem) => {
+    activateDialog();
+    initlizeItem(item);
+  };
+
+  const initlizeItem = (item: IItem) => {
+    setActiveItem(item);
+  };
+
+  const activateDialog = () => {
+    dialogDispatcher(showDialog());
+    console.log(isDialogActive);
+  };
 
   return (
-    <div className="product-container">
-      <div className="product-table-heading">
-        <button onClick={handleCreateItem}>create item</button>
-        <button>Add to cart</button>
-      </div>
-      <table className="shoppint-cart-table">
-        <thead>
-          <tr>
-            {ITEM_COLUMNS.map((column, index) => {
-              return <th key={index}>{column}</th>;
-            })}
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="cart-item">
-            <td>Apple</td>
-            <td>
-              <input
-                className="quantity-input"
-                type="number"
-                value={1}
-                onChange={handleQuantityChange}
-              />
-            </td>
-            <td>{3.33}</td>
-            <td>
-              <button
-                className="update-button"
-                onClick={() => handleUpdateItem}
-              >
-                <Icon icon="edit-icon"></Icon>
-              </button>
-              <button
-                className="delete-button"
-                onClick={() => handleDeleteItem}
-              >
-                <Icon icon="delete-icon"></Icon>
-              </button>
-              <button className="view-button" onClick={() => handleViewItem}>
-                <Icon icon="view-icon"></Icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <>
+      <ItemDialog
+        isOpen={isDialogActive}
+        onAdd={() => handleCreateItem()}
+        item={activeItem as any}
+        onDelete={() => handleDeleteItem}
+        onUpdate={() => handleUpdateItem}
+        mode={activeMode}
+      />
+      <ItemTable
+        dataset={itemData}
+        deleteItem={handleDeleteItem}
+        view={handleViewItem}
+        update={handleUpdateItem}
+      />
+    </>
   );
 };
 

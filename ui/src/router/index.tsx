@@ -11,7 +11,6 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
-      {/* <Route path="/" element={<HomePage />} /> */}
       <Route
         path="/"
         element={
@@ -19,16 +18,7 @@ export default function Router() {
             <HomePage />
           </PrivateRoute>
         }
-      >
-        {/* <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <News />
-            </PrivateRoute>
-          }
-        /> */}
-      </Route>
+      ></Route>
 
       <Route path="*" element={<NotFound />} />
     </Routes>
