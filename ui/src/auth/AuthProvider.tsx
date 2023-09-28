@@ -42,10 +42,10 @@ export const AuthProvider = ({ children }: any) => {
         localStorage.setItem('token', data?.token);
         localStorage.setItem('user', JSON.stringify(userData));
         handleSuccessfulLogin();
-        toast('sucesfully logged in');
+        toast('Logged in');
       })
-      .catch((error) => {
-        toast('Something went wrong.', error);
+      .catch(() => {
+        toast('Unable to authenticate or Invalid login');
       });
   };
 

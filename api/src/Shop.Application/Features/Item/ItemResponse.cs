@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shop.Domain.Entities.Common;
 
 namespace Shop.Application.Features.Item
 {
     public record ItemResponse
     {
+        public ItemId Id { get; init; } 
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
         public int Quantity { get; set; }

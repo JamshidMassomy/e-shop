@@ -1,7 +1,9 @@
 const initialState = {
   user: {},
+  item: {
+    cart: [],
+  },
   page: {
-    isDialogActive: false,
     notification: {
       isActive: false,
       message: '',

@@ -1,7 +1,8 @@
 ﻿using Ardalis.Result;
 using MediatR;
+using Shop.Domain.Entities.Common;
 
 namespace Shop.Application.Features.Item.GetItemById
 {
-    public record GetItemByIdRequest(int Id): IRequest<Result<ItemResponse>>;
+    public record GetItemByIdRequest(ItemId Id): IRequest<Result<ItemResponse>>;
 }

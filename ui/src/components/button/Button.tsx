@@ -1,11 +1,20 @@
+import React, { memo } from 'react';
+import './ButtonStyles.scss';
 
-import React, { memo } from "react"
-const Button = () => {
-    return (
-        <h1>
-            I m buttpm
-        </h1>
-    )
+interface IButton {
+  onClick: () => any;
+  label: string;
+  className?: string;
 }
+
+const Button = (props: IButton) => {
+  const { onClick, label, className } = props;
+
+  return (
+    <button className={'custom-btn'} onClick={onClick}>
+      {label}
+    </button>
+  );
+};
 
 export default memo(Button);

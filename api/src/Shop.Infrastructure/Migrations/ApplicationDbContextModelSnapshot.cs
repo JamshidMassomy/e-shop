@@ -49,6 +49,38 @@ namespace Shop.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Items");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("08160000-647a-e86a-fee6-08dbbf67fe82"),
+                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1669),
+                            Description = "Apple Iphone newest product",
+                            Name = "Iphone14",
+                            Price = 900m,
+                            Quantity = 2,
+                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1700)
+                        },
+                        new
+                        {
+                            Id = new Guid("08160000-647a-e86a-ff16-08dbbf67fe82"),
+                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1704),
+                            Description = "Andriod Mobile phone",
+                            Name = "Andriod",
+                            Price = 800m,
+                            Quantity = 5,
+                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1705)
+                        },
+                        new
+                        {
+                            Id = new Guid("08160000-647a-e86a-ff1b-08dbbf67fe82"),
+                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1708),
+                            Description = "Dell Laptop",
+                            Name = "Laptop",
+                            Price = 700m,
+                            Quantity = 6,
+                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1710)
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
-import { SHOW_NOTIFICATION } from '../util/Constants';
+import { CART_ACTION } from '../util/Constants';
 
-export const fetchItem = (payload: any) => (dispatch: any) => {
-  const notification = { itemData: payload };
-  dispatch({ type: SHOW_NOTIFICATION, notification });
+export const addCartAction = (payload: any) => (dispatch: any) => {
+  const data = { item: payload };
+  dispatch({ type: CART_ACTION, data });
 };

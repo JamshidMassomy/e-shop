@@ -10,6 +10,8 @@ import { _fetch } from '../../api/api.config';
 import './LoginPageStyles.scss';
 import { GoogleLogin } from '@react-oauth/google';
 import { LABELS } from '../../util/Constants';
+import toast, { Toaster } from 'react-hot-toast';
+import ReactErrorBoundary from '../../components/error_boundry/ReactErrorBoundry';
 
 export interface IUserData {
   name: string;
@@ -21,7 +23,10 @@ export interface IUserData {
 
 const LoginPage = () => {
   const { login } = useAuth();
-  const handleLoginFailer = () => {};
+
+  const handleLoginFailer = () => {
+    toast('Unauthorized or Login failed');
+  };
 
   useEffect(() => {
     clearCache();
@@ -29,7 +34,6 @@ const LoginPage = () => {
 
   const clearCache = () => {
     localStorage.clear();
-    document.cookie = '';
   };
 
   const handleLogin = (oauthResponse: any) => {
@@ -37,22 +41,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="wrapper">
-      <div className="container">
-        <div className="container-col-left">
-          <div className="login-text">
-            <h2>{LABELS.E_SHOPE}</h2>
-            <span>{LABELS.LOGIN_ACCESS_LABEL}</span>
+    <>
+      <Toaster position="top-right"></Toaster>
+      <div className="wrapper">
+        <div className="container">
+          <div className="container-col-left">
+            <div className="login-text">
+              <h2>{LABELS.E_SHOPE}</h2>
+              <span>{LABELS.LOGIN_ACCESS_LABEL}</span>
+            </div>
           </div>
-        </div>
-        <div className="container-col-right">
-          <div className="login-form">
-            <h2>{LABELS.LOGIN}</h2>
-            <GoogleLogin onSuccess={handleLogin} onError={handleLoginFailer} />
+          <div className="container-col-right">
+            <div className="login-form">
+              <h2>{LABELS.LOGIN}</h2>
+              <div className="login-form-btn">
+                <GoogleLogin
+                  onSuccess={handleLogin}
+                  onError={handleLoginFailer}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

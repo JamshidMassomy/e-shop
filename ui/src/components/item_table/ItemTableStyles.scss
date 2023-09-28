@@ -1,32 +1,3 @@
-.update-button,
-.delete-button,
-.view-button {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  padding: 6px 7px;
-  margin: 2px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-/* Hover effect */
-.update-button:hover,
-.delete-button:hover,
-.view-button:hover {
-  background-color: #2980b9;
-}
-
-/* Styles for the icons inside the buttons (assuming the icon is an <Icon> component) */
-.update-button .icon,
-.delete-button .icon,
-.view-button .icon {
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-/* CartItem.css */
 tr {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;
@@ -48,7 +19,6 @@ button {
   cursor: pointer;
 }
 
-/* CartTable.css */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -64,9 +34,4 @@ td {
 th {
   background-color: #007bff;
   color: #fff;
-}
-
-h2 {
-  color: #333;
-  font-size: 24px;
 }

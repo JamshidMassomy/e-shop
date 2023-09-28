@@ -3,8 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // app
-import './index.css';
-import App from './App';
+import './index.scss';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -21,6 +20,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from './auth/AuthProvider';
 
 import { OAUTH_CLIENT_ID } from './util/Constants';
+import ReactErrorBoundary from './components/error_boundry/ReactErrorBoundry';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

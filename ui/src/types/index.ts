@@ -18,4 +18,16 @@ export interface IResponse {
   totalPages: number;
 }
 
-export type mode = 'edit' | 'delete' | 'create';
+export interface ItemTableProps {
+  update?: (item: IItem) => {};
+  deleteItem?: (item: IItem) => {};
+  addToCart: (item: IItem) => {};
+  dataset?: any[];
+}
+
+export interface IUpdateItem {
+  isOpen: boolean;
+  oldItem?: IItem;
+  newItem?: IItem;
+  item?: IItem;
+}

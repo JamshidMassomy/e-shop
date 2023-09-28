@@ -1,24 +1,31 @@
 // react
 import React, { memo, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
-// styles & constants
-import './ProductPageStyles.scss';
+// api
 import { _fetch } from '../../api/api.config';
-import { IItem, IResponse, mode } from '../../types';
-import ItemDialog from '../../components/item/item_dialog/ItemDialog';
-import { useDispatch, useSelector } from 'react-redux';
-import { showDialog } from '../../action/pageAction';
+
+// component
 import ItemTable from '../../components/item_table/ItemTable';
+import AddCartDialog from '../../components/add_cart_dialog/AddCartDialog';
+import DeleteItemDialog from '../../components/delete_item/DeleteItemDialog';
+import CreateItemDialog from '../../components/create_item_dialog/CreateItemDialog';
+import { Button } from '../../components/button';
+import UpdateItem from '../../components/update_item/UpdateItem';
+
+// styles
+import './ProductPageStyles.scss';
+
+// types
+import { IItem, IResponse } from '../../types';
 
 const ProductPage = () => {
-  const dialogDispatcher = useDispatch();
-  const isDialogActive = useSelector(
-    (state: any) => state?.page.isDialogActive
-  );
-
+  const [isUpdateActive, setIsUpdateActive] = useState<boolean>(false);
+  const [isDeleteActive, setIsDeleteActive] = useState<boolean>(false);
+  const [isAddCartOpen, setIsAddCartOpen] = useState<boolean>(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
   const [itemData, setItemData] = useState<IItem[]>([]);
   const [activeItem, setActiveItem] = useState<IItem>();
-  const [activeMode, setActiveMode] = useState<mode>();
 
   useEffect(() => {
     fetchItems();
@@ -27,33 +34,33 @@ const ProductPage = () => {
   const fetchItems = async () => {
     await _fetch('/Item')
       .then((data: IResponse | any) => {
+        if (!data) {
+          toast('Something went wrong unable to fetch data');
+        }
+        console.log('data', data);
         setItemData(data.result);
       })
-      .catch((error) => {});
+      .catch(() => {
+        toast('Something went wrong or back-end server is not stable');
+      });
   };
 
   const handleCreateItem = async () => {
-    setActiveMode('create');
-    activateDialog();
-    //initlizeItem
-    console.log('adding item');
+    setIsCreateDialogOpen(!isCreateDialogOpen);
   };
 
   const handleUpdateItem = async (item: IItem) => {
-    setActiveMode('edit');
-    activateDialog();
+    setIsUpdateActive(!isUpdateActive);
     initlizeItem(item);
-    console.log('updating itme', item);
   };
 
   const handleDeleteItem = async (item: IItem) => {
-    setActiveMode('delete');
-    activateDialog();
+    setIsDeleteActive(!isDeleteActive);
     initlizeItem(item);
   };
 
-  const handleViewItem = async (item: IItem) => {
-    activateDialog();
+  const handleAddToCart = async (item: IItem) => {
+    setIsAddCartOpen(!isAddCartOpen);
     initlizeItem(item);
   };
 
@@ -61,27 +68,29 @@ const ProductPage = () => {
     setActiveItem(item);
   };
 
-  const activateDialog = () => {
-    dialogDispatcher(showDialog());
-    console.log(isDialogActive);
-  };
-
   return (
     <>
-      <ItemDialog
-        isOpen={isDialogActive}
-        onAdd={() => handleCreateItem()}
+      <Toaster position="top-right" />
+      <DeleteItemDialog isOpen={isDeleteActive} />
+      <AddCartDialog isOpen={isAddCartOpen} item={activeItem} />
+      <CreateItemDialog isOpen={isCreateDialogOpen} />
+      <UpdateItem
+        isOpen={isUpdateActive}
         item={activeItem as any}
-        onDelete={() => handleDeleteItem}
-        onUpdate={() => handleUpdateItem}
-        mode={activeMode}
+        oldItem={activeItem}
       />
-      <ItemTable
-        dataset={itemData}
-        deleteItem={handleDeleteItem}
-        view={handleViewItem}
-        update={handleUpdateItem}
-      />
+      <div className="product-container">
+        <div className="btn-create">
+          <Button onClick={handleCreateItem} label={'create item'} />
+        </div>
+
+        <ItemTable
+          dataset={itemData}
+          deleteItem={handleDeleteItem}
+          addToCart={handleAddToCart as any}
+          update={handleUpdateItem}
+        />
+      </div>
     </>
   );
 };

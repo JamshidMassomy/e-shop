@@ -18,7 +18,7 @@ module.exports = {
       directory: path.resolve(__dirname, 'dist'),
     },
     host: 'localhost',
-    port: 4000,
+    port: 3000,
     open: true,
     hot: true,
     compress: true,
@@ -65,6 +65,6 @@ module.exports = {
       title: 'Webpack App',
       filename: 'index.html',
       template: 'public/index.html',
-    })
+    }),
   ],
 };

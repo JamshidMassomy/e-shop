@@ -19,6 +19,7 @@ builder.Services.AddControllers(
         options.AllowEmptyInputInBodyModelBinding = true;
 
     });
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddApplicationSetup();
 builder.Services.AddPersistenceSetup(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
