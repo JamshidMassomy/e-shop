@@ -1,3 +1,9 @@
+/* Add a class to the container */
+.table-container {
+  max-height: 70%; /* Set the desired height for the scrollable container */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
 tr {
   background-color: #f5f5f5;
   border-bottom: 1px solid #ccc;

@@ -19,7 +19,7 @@ const Input = (props: IInput) => {
         autoFocus
         type="text"
         placeholder={placeholder}
-        value={value}
+        value={value || null}
         onChange={onChange}
       />
     </div>

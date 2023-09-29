@@ -20,7 +20,6 @@ namespace Shop.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -32,12 +31,12 @@ namespace Shop.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Items",
-                columns: new[] { "Id", "CreatedAt", "Description", "Name", "Price", "Quantity", "UpdatedAt" },
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "Price", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("08160000-647a-e86a-fee6-08dbbf67fe82"), new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1669), "Apple Iphone newest product", "Iphone14", 900m, 2, new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1700) },
-                    { new Guid("08160000-647a-e86a-ff16-08dbbf67fe82"), new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1704), "Andriod Mobile phone", "Andriod", 800m, 5, new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1705) },
-                    { new Guid("08160000-647a-e86a-ff1b-08dbbf67fe82"), new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1708), "Dell Laptop", "Laptop", 700m, 6, new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1710) }
+                    { new Guid("28690000-647a-e86a-2cc2-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5758), "Apple Iphone newest product", "Iphone14", 900m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5796) },
+                    { new Guid("28690000-647a-e86a-2cf6-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5799), "Andriod Mobile phone", "Andriod", 800m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5801) },
+                    { new Guid("28690000-647a-e86a-2cfb-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5804), "Dell Laptop", "Laptop", 700m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5806) }
                 });
         }
 

@@ -6,10 +6,10 @@ import Input from '../input/Input';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addCartAction } from '../../action/ItemAction';
+import { addCartAction } from '../../action/cartAction';
 import toast, { Toaster } from 'react-hot-toast';
 
-const AddCartDialog: React.FC<any> = ({ isOpen, item }: any) => {
+const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
   const [isActive, setIsActive] = useState<boolean>(isOpen);
   const dispatcher = useDispatch();
   const selector: any = useSelector((state: any) => state);
@@ -19,10 +19,6 @@ const AddCartDialog: React.FC<any> = ({ isOpen, item }: any) => {
   }, [isOpen]);
 
   const handleChange = (event: any) => {};
-
-  const handleClose = () => {
-    setIsActive(false);
-  };
 
   const handleAddToCart = () => {
     dispatcher(addCartAction(item) as any);

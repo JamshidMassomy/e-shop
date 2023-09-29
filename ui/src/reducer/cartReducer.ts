@@ -1,9 +1,9 @@
 import initialState from '../store/initialState';
-import { CART_ACTION } from '../util/Constants';
+import { CART_ADD } from '../util/Constants';
 
-export default function itemReducer(state = initialState?.item, action: any) {
+export default function cartReducer(state = initialState?.item, action: any) {
   switch (action.type) {
-    case CART_ACTION:
+    case CART_ADD:
       if (!state.cart.some((el) => el.item.id === action.data.item.id)) {
         return { ...state, cart: [...state.cart, action.data] };
       }

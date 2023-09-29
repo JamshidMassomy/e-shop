@@ -8,7 +8,6 @@ import { _fetch } from '../../api/api.config';
 // component
 import ItemTable from '../../components/item_table/ItemTable';
 import AddCartDialog from '../../components/add_cart_dialog/AddCartDialog';
-import DeleteItemDialog from '../../components/delete_item/DeleteItemDialog';
 import CreateItemDialog from '../../components/create_item_dialog/CreateItemDialog';
 import { Button } from '../../components/button';
 import UpdateItem from '../../components/update_item/UpdateItem';
@@ -18,12 +17,13 @@ import './ProductPageStyles.scss';
 
 // types
 import { IItem, IResponse } from '../../types';
+import { ERROR_LABLES } from '../../util/Constants';
 
 const ProductPage = () => {
   const [isUpdateActive, setIsUpdateActive] = useState<boolean>(false);
-  const [isDeleteActive, setIsDeleteActive] = useState<boolean>(false);
   const [isAddCartOpen, setIsAddCartOpen] = useState<boolean>(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
+
   const [itemData, setItemData] = useState<IItem[]>([]);
   const [activeItem, setActiveItem] = useState<IItem>();
 
@@ -35,18 +35,19 @@ const ProductPage = () => {
     await _fetch('/Item')
       .then((data: IResponse | any) => {
         if (!data) {
-          toast('Something went wrong unable to fetch data');
+          toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         }
-        console.log('data', data);
         setItemData(data.result);
       })
       .catch(() => {
-        toast('Something went wrong or back-end server is not stable');
+        toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
       });
   };
 
   const handleCreateItem = async () => {
-    setIsCreateDialogOpen(!isCreateDialogOpen);
+    if (!isCreateDialogOpen) {
+      setIsCreateDialogOpen(true);
+    }
   };
 
   const handleUpdateItem = async (item: IItem) => {
@@ -55,8 +56,18 @@ const ProductPage = () => {
   };
 
   const handleDeleteItem = async (item: IItem) => {
-    setIsDeleteActive(!isDeleteActive);
-    initlizeItem(item);
+    if (item.id) {
+      await _fetch(`/Item/${item.id}`, {
+        method: 'DELETE',
+      })
+        .then(() => {
+          toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
+        })
+        .catch(() => {
+          toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
+        });
+    }
+    handleRefresh();
   };
 
   const handleAddToCart = async (item: IItem) => {
@@ -68,16 +79,31 @@ const ProductPage = () => {
     setActiveItem(item);
   };
 
+  const handleRefresh = async () => {
+    setIsUpdateActive(false);
+    setIsCreateDialogOpen(false);
+    setIsAddCartOpen(false);
+    await fetchItems();
+  };
+
   return (
     <>
       <Toaster position="top-right" />
-      <DeleteItemDialog isOpen={isDeleteActive} />
-      <AddCartDialog isOpen={isAddCartOpen} item={activeItem} />
-      <CreateItemDialog isOpen={isCreateDialogOpen} />
+      <AddCartDialog
+        isOpen={isAddCartOpen}
+        item={activeItem}
+        handleClose={() => setIsAddCartOpen(false)}
+      />
+      <CreateItemDialog
+        handleClose={() => setIsCreateDialogOpen(false)}
+        isOpen={isCreateDialogOpen}
+        handleRefresh={handleRefresh}
+      />
       <UpdateItem
+        handleClose={() => setIsUpdateActive(false)}
+        handleRefresh={handleRefresh}
         isOpen={isUpdateActive}
         item={activeItem as any}
-        oldItem={activeItem}
       />
       <div className="product-container">
         <div className="btn-create">

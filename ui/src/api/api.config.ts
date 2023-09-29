@@ -6,6 +6,7 @@ export const _fetch = (url: string, options: any = {}) => {
     const fetchData = {
       method: options?.method || 'GET',
       headers: {
+        Authentication: `Bearer ${localStorage.getItem('token')}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
@@ -15,7 +16,14 @@ export const _fetch = (url: string, options: any = {}) => {
     fetch(api, fetchData)
       .then((response) => {
         if (response.ok) {
-          response.json().then((json) => resolve(json));
+          const json = response.json();
+          if (json) {
+            json
+              .then((json) => resolve(json))
+              .catch(() => {
+                resolve(null);
+              });
+          }
         } else {
           response.json().then((json) => reject(json));
         }

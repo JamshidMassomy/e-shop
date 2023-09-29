@@ -12,7 +12,7 @@ using Shop.Infrastructure.Context;
 namespace Shop.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230927144237_InitialCreate")]
+    [Migration("20230929152203_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -43,9 +43,6 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -56,33 +53,30 @@ namespace Shop.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("08160000-647a-e86a-fee6-08dbbf67fe82"),
-                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1669),
+                            Id = new Guid("28690000-647a-e86a-2cc2-08dbc0ffd5ab"),
+                            CreatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5758),
                             Description = "Apple Iphone newest product",
                             Name = "Iphone14",
                             Price = 900m,
-                            Quantity = 2,
-                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1700)
+                            UpdatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5796)
                         },
                         new
                         {
-                            Id = new Guid("08160000-647a-e86a-ff16-08dbbf67fe82"),
-                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1704),
+                            Id = new Guid("28690000-647a-e86a-2cf6-08dbc0ffd5ab"),
+                            CreatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5799),
                             Description = "Andriod Mobile phone",
                             Name = "Andriod",
                             Price = 800m,
-                            Quantity = 5,
-                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1705)
+                            UpdatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5801)
                         },
                         new
                         {
-                            Id = new Guid("08160000-647a-e86a-ff1b-08dbbf67fe82"),
-                            CreatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1708),
+                            Id = new Guid("28690000-647a-e86a-2cfb-08dbc0ffd5ab"),
+                            CreatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5804),
                             Description = "Dell Laptop",
                             Name = "Laptop",
                             Price = 700m,
-                            Quantity = 6,
-                            UpdatedAt = new DateTime(2023, 9, 27, 17, 42, 37, 559, DateTimeKind.Local).AddTicks(1710)
+                            UpdatedAt = new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5806)
                         });
                 });
 #pragma warning restore 612, 618

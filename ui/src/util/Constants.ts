@@ -1,7 +1,8 @@
 export const API_BASE_URL = `https://localhost:7092/api/v1`;
 export const SHOW_NOTIFICATION = 'SHOW_ERROR';
 export const HIDE_NOTIFICATION = 'HIDE_ERROR';
-export const CART_ACTION = 'CART_ACTION';
+export const CART_ADD = 'CART_ADD';
+export const CART_REMOVE = 'CART_REMOVE';
 
 export const HIDE_CART_DIALOG = 'HIDE_CART_DIALOG';
 export const SHOW_CART_DIALOG = 'SHOW_CART_DIALOG';
@@ -29,4 +30,15 @@ export const ITEM_LABELS = {
   QUANTITY: 'Quantity',
   DESCRIPTION: 'Description',
   PRICE: 'Price',
+};
+
+export const ERROR_LABLES = {
+  SOMETHING_WENT_WRONG: 'Something went wrong or server is not responding',
+};
+
+export const ITEM_LABLES = {
+  NAME: 'Name',
+  PRICE: 'Price',
+  QUANTITY: 'Quanitty',
+  DESCRIPTION: 'Description',
 };

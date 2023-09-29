@@ -2,16 +2,17 @@ import React, { memo } from 'react';
 import './ButtonStyles.scss';
 
 interface IButton {
-  onClick: () => any;
+  onClick?: () => any;
   label: string;
   className?: string;
+  type?: any;
 }
 
 const Button = (props: IButton) => {
-  const { onClick, label, className } = props;
+  const { onClick, label, type } = props;
 
   return (
-    <button className={'custom-btn'} onClick={onClick}>
+    <button type={type} className={'custom-btn'} onClick={onClick}>
       {label}
     </button>
   );

@@ -5,13 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Application.Features.Item;
 using Shop.Application.Features.Item.CreateItem;
+using Shop.Application.Features.Item.DeleteItem;
 using Shop.Application.Features.Item.GetAllItem;
 using Shop.Application.Features.Item.GetItemById;
+using Shop.Application.Features.Item.UpdateItem;
 using Shop.Application.Response;
 using Shop.Domain.Entities.Common;
-
-
-
 
 
 namespace Shop.Api.Controllers
@@ -43,7 +42,7 @@ namespace Shop.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<Result<ItemResponse>> SaveItem([FromBody] CreateItemRequest request)
         {
             var result = await _mediator.Send(request);
@@ -69,14 +68,27 @@ namespace Shop.Api.Controllers
             throw new NotImplementedException();
         }
 
-        [HttpPut]
-        [Authorize]
-        public ActionResult Edit(ItemId Id)
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        [TranslateResultToActionResult]
+        [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound)]
+        public async Task<Result<ItemResponse>> Update(ItemId id, [FromBody] UpdateItemRequest request)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(request with { Id = id });
+            return result;
         }
 
-      
+
+        [HttpDelete("{id}")]
+        [TranslateResultToActionResult]
+        [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound)]
+        [AllowAnonymous]
+        public async Task<Result> Delete(ItemId id)
+        {
+            var result = await _mediator.Send(new DeleteItemRequest(id));
+            return result;
+        }
+
 
     }
 }

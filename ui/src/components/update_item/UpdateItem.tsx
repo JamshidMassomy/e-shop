@@ -5,28 +5,45 @@ import React, { memo, useEffect, useState } from 'react';
 import Input from '../input/Input';
 import { IItem, IUpdateItem } from '../../types';
 import { _fetch } from '../../api/api.config';
+import toast from 'react-hot-toast';
 
-const UpdateItemDialog = (props: IUpdateItem) => {
-  const { isOpen, oldItem, item } = props;
+const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
   const [isActive, setIsActive] = useState<boolean>(isOpen);
+  const [updatedItem, setUpdateItem] = useState<IItem>(item);
 
   useEffect(() => {
     setIsActive(isOpen);
   }, [isOpen]);
 
-  const [newItem, setNewItem] = useState<any>(item);
+  useEffect(() => {
+    setUpdateItem(item);
+  }, [item]);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-    setNewItem((prevData) => ({
+
+    setUpdateItem((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-    console.log('change', { newItem, item });
+    console.log('change', { updatedItem, item });
   };
 
-  const handleClose = () => {
-    setIsActive(false);
+  const handleUpdate = () => {
+    if (item.id) {
+      _fetch(`/Item/${item.id}`, {
+        method: 'PUT',
+        body: updatedItem,
+      })
+        .then(() => {
+          toast('Updated Item');
+        })
+        .catch(() => {
+          toast('Failed to update Item');
+        });
+      handleRefresh();
+      handleClose();
+    }
   };
 
   return (
@@ -40,32 +57,34 @@ const UpdateItemDialog = (props: IUpdateItem) => {
             <label>Item Name</label>
             <Input
               name="name"
-              value={newItem?.name || item?.name}
+              value={updatedItem?.name}
               onChange={handleChange}
             />
           </div>
           <div className="dialog-body-row">
             <label>Price</label>
             <Input
-              name="Price"
-              value={newItem?.price || item?.price}
+              name="price"
+              value={updatedItem?.price}
               onChange={handleChange}
             />
           </div>
           <div className="dialog-body-row">
-            <label>Quantity</label>
-            <Input name="quantity" onChange={handleChange} />
-          </div>
-          <div className="dialog-body-row">
             <label>Description</label>
-            <Input name="description" onChange={handleChange}></Input>
+            <Input
+              name="description"
+              value={updatedItem?.description}
+              onChange={handleChange}
+            ></Input>
           </div>
         </div>
         <div className="dialog-footer">
           <button className="cancel-button" onClick={handleClose}>
             Cancel
           </button>
-          <button className="add-button">Update</button>
+          <button className="add-button" onClick={handleUpdate}>
+            Update
+          </button>
         </div>
       </div>
     </div>

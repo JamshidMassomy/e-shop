@@ -13,7 +13,7 @@ const ItemTable = (props: ItemTableProps) => {
   const { update, dataset, deleteItem, addToCart } = props;
 
   return (
-    <div>
+    <div className="table-container">
       <table className="shoppint-cart-table">
         <thead>
           <tr>
@@ -22,6 +22,7 @@ const ItemTable = (props: ItemTableProps) => {
             })}
           </tr>
         </thead>
+
         <tbody>
           {dataset?.length == 0 ? (
             <span>No data avaliable</span>

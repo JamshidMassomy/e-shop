@@ -1,9 +1,7 @@
 ﻿using Mapster;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Shop.Application.Common;
 using Shop.Application.Response;
-using System.Linq;
 
 namespace Shop.Application.Features.Item.GetAllItem
 {
@@ -23,8 +21,7 @@ namespace Shop.Application.Features.Item.GetAllItem
                    Id = item.Id ,
                    Name = item.Name,
                    Price = item.Price,
-                   Description = item.Description,
-                   Quantity = item.Quantity,
+                   Description = item.Description
                });
 
 

@@ -23,7 +23,6 @@ namespace Shop.Application.Features.Item.UpdateItem
             originalItem.Name = request.Name;
             originalItem.Description = request.Description;
             originalItem.Price = request.Price;
-            originalItem.Quantity = request.Quantity;
             _context.Items.Update(originalItem);
             await _context.SaveChangesAsync(cancellationToken);
             return originalItem.Adapt<ItemResponse>();

@@ -1,11 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
 import rootReducer from '../reducer';
 
-// export const history = createBrowserHistory();
 const preloadedState = {};
 const store = configureStore({
-  //middleware: [thunk, routerMiddleware(history)],
   reducer: rootReducer,
   preloadedState,
 });
