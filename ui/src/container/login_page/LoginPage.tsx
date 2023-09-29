@@ -9,9 +9,8 @@ import { _fetch } from '../../api/api.config';
 // styles
 import './LoginPageStyles.scss';
 import { GoogleLogin } from '@react-oauth/google';
-import { LABELS } from '../../util/Constants';
+import { ERROR_LABLES, LABELS } from '../../util/Constants';
 import toast, { Toaster } from 'react-hot-toast';
-import ReactErrorBoundary from '../../components/error_boundry/ReactErrorBoundry';
 
 export interface IUserData {
   name: string;
@@ -25,7 +24,7 @@ const LoginPage = () => {
   const { login } = useAuth();
 
   const handleLoginFailer = () => {
-    toast('Unauthorized or Login failed');
+    toast(ERROR_LABLES.FAILED_LOGIN);
   };
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <Toaster position="top-right"></Toaster>
+      <Toaster position="top-right" />
       <div className="wrapper">
         <div className="container">
           <div className="container-col-left">

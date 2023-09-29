@@ -1,10 +1,8 @@
 ﻿using Ardalis.Result;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Application.Auth;
-using Shop.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,13 +11,10 @@ namespace Shop.Application.Features.Auth
 {
     public class AuthenticateHandler : IRequestHandler<AuthenticateRequest, Result<Jwt>>
     {
-        //private readonly IContext _context;
-
         private readonly TokenConfiguration _appSettings;
 
-        public AuthenticateHandler(IOptions<TokenConfiguration> appSettings /*IContext context*/)
+        public AuthenticateHandler(IOptions<TokenConfiguration> appSettings)
         {
-           // _context = context;
             _appSettings = appSettings.Value;
 
         }
@@ -46,27 +41,6 @@ namespace Shop.Application.Features.Auth
             {
                 claimEnumerable = Enumerable.Empty<Claim>();
             }
-            /*
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, Security.Encrypt(AppSettings.appSettings.JwtEmailEncryption,user.email)),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
-
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(AppSettings.appSettings.JwtSecret));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(String.Empty,
-              String.Empty,
-              claims,
-              expires: DateTime.Now.AddSeconds(55 * 60),
-              signingCredentials: creds);
-            return Ok(new
-            {
-                token = new JwtSecurityTokenHandler().WriteToken(token)
-            });
-            */
-
 
             var claimsIdentity = new ClaimsIdentity(claimEnumerable, "custom");
 

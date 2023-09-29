@@ -3,9 +3,11 @@ import React, { memo, useEffect, useState } from 'react';
 
 // types
 import Input from '../input/Input';
-import { IItem, IUpdateItem } from '../../types';
+import { IItem } from '../../types';
 import { _fetch } from '../../api/api.config';
 import toast from 'react-hot-toast';
+import Dialog from '../dialog/Dialog';
+import { ERROR_LABLES } from '../../util/Constants';
 
 const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
   const [isActive, setIsActive] = useState<boolean>(isOpen);
@@ -39,7 +41,7 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
           toast('Updated Item');
         })
         .catch(() => {
-          toast('Failed to update Item');
+          toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         });
       handleRefresh();
       handleClose();
@@ -47,8 +49,8 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
   };
 
   return (
-    <div className={`item-dialog ${isActive ? 'open' : ''}`}>
-      <div className="dialog-content">
+    <>
+      <Dialog isActive={isActive} handClose={handleClose}>
         <div className="dialog-header">
           <h2>Update Item</h2>
         </div>
@@ -86,8 +88,8 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
             Update
           </button>
         </div>
-      </div>
-    </div>
+      </Dialog>
+    </>
   );
 };
 

@@ -16,39 +16,32 @@ public class AuthController : ControllerBase
 {
 
     private readonly IMediator _mediator;
-    public AuthController(IMediator mediator)
+    private readonly IConfiguration _configuration;
+    public AuthController(IMediator mediator, IConfiguration configuration)
     {
         _mediator = mediator;
+        _configuration = configuration;
     }
 
 
     [HttpPost]
-    [AllowAnonymous]
     [Route("authenticate-google")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [Consumes("application/json")]
+    [AllowAnonymous]
     public async Task<IActionResult> LoginWithGoogle([FromBody] TokenRequest tokenRequest)
     {
-        if (ValidateAsync(tokenRequest.tokenId, new ValidationSettings()).IsCompletedSuccessfully)
+        var settings = new ValidationSettings()
         {
-            var request = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            var jwtToken = await _mediator.Send(new AuthenticateRequest { RequestResult = request });
-            return Ok(jwtToken.Value);
-        } else
-        {
-            return Unauthorized();
-        }
+            Audience = new [] { _configuration["Google:ClientId"] }
+        };
+        await ValidateAsync(tokenRequest.TokenId, settings); 
+        var jwtToken = await _mediator.Send(new AuthenticateRequest { RequestResult = request });
+        return Ok(jwtToken.Value);
+        
     }
 
-
-    [HttpGet]
-    [AllowAnonymous]
-    [Route("logout")]
-    public async Task<IActionResult> Logout()
-    {
-        await HttpContext.SignOutAsync();
-        return Redirect("/");
-    }
 
 }

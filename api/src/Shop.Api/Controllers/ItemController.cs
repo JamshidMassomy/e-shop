@@ -30,7 +30,6 @@ namespace Shop.Api.Controllers
 
         
         [HttpGet]
-        [Authorize]
         [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -41,8 +40,9 @@ namespace Shop.Api.Controllers
 
         }
 
+
         [HttpPost]
-        [AllowAnonymous]
+        [TranslateResultToActionResult]
         public async Task<Result<ItemResponse>> SaveItem([FromBody] CreateItemRequest request)
         {
             var result = await _mediator.Send(request);
@@ -51,25 +51,16 @@ namespace Shop.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [TranslateResultToActionResult]
-        // [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound)]
+        [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound, ResultStatus.Unauthorized)]
         public async Task<ActionResult<PaginatedList<ItemResponse>>> FetchAllItems([FromQuery] AllItemRequest request)
         {
             return Ok(await _mediator.Send(request));
           
         }
 
-        [HttpDelete]
-        [Authorize]
-        // GET: ItemController/Details/5
-        public ActionResult Details(ItemId Id)
-        {
-            throw new NotImplementedException();
-        }
 
         [HttpPut("{id}")]
-        [AllowAnonymous]
         [TranslateResultToActionResult]
         [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound)]
         public async Task<Result<ItemResponse>> Update(ItemId id, [FromBody] UpdateItemRequest request)
@@ -82,7 +73,6 @@ namespace Shop.Api.Controllers
         [HttpDelete("{id}")]
         [TranslateResultToActionResult]
         [ExpectedFailures(ResultStatus.Invalid, ResultStatus.NotFound)]
-        [AllowAnonymous]
         public async Task<Result> Delete(ItemId id)
         {
             var result = await _mediator.Send(new DeleteItemRequest(id));

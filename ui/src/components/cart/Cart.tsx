@@ -1,37 +1,46 @@
+// react
 import React, { memo, useEffect, useState } from 'react';
-import './CartStyles.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+// buttons
+import { removeCartAction } from '../../action/cartAction';
 import { IItem } from '../../types';
-import IconButton from '../icon_button/IconButton';
+
+// styles
+import './CartStyles.scss';
+import Icon from '../icon/Icon';
 
 const Cart = () => {
-  const selector = useSelector((state: any) => state?.item);
-  const [data, setData] = useState(selector);
+  const itemSelector = useSelector((state: any) => state?.item);
+  const [data, setData] = useState(itemSelector);
+  const dispatcher: any = useDispatch();
 
   useEffect(() => {
-    setData(selector);
-    console.log(data);
-  }, [selector]);
+    setData(itemSelector);
+  }, [itemSelector]);
 
-  const handleRemoveItem = (item: IItem) => {};
-  console.log('seelctr', { data, id: data });
+  const handleRemoveItem = (item: IItem) => {
+    dispatcher(removeCartAction(item));
+  };
 
   return (
     <>
       <div className="shopping-cart">
         <h3>Shopping Cart</h3>
-        {selector?.cart.length === 0 ? (
+        {itemSelector?.cart.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <ul>
-            {data.cart.map((cartItem, index) => (
+            {data?.cart.map((cartItem, index) => (
               <li key={index}>
-                <span>{cartItem.item.name}</span>
-                <span>{cartItem.item.quantity}</span>
-                <IconButton
+                <div className="item-cart-li">
+                  <span>{cartItem?.name}</span>
+                  <span>{cartItem?.quantity}</span>
+                </div>
+                <Icon
                   icon="delete-icon"
-                  onClick={() => handleRemoveItem(cartItem.item)}
-                />
+                  onClick={() => handleRemoveItem(cartItem)}
+                ></Icon>
               </li>
             ))}
           </ul>

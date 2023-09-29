@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Shop.Application.Auth;
 using System.Text;
@@ -14,8 +13,6 @@ public static class AuthenticationConfig
 
         var tokenConfig = configuration.GetRequiredSection("TokenConfiguration");
         services.Configure<TokenConfiguration>(tokenConfig);
-
-        // configure jwt authentication
         var appSettings = tokenConfig.Get<TokenConfiguration>();
         var key = Encoding.ASCII.GetBytes(appSettings!.Secret);
 
@@ -25,16 +22,6 @@ public static class AuthenticationConfig
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             
         })
-            .AddGoogle(config =>
-            {
-                config.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                config.AuthorizationEndpoint += "?prompt=consent"; 
-                config.AccessType = "offline";
-                config.SaveTokens = true;
-                // config.CallbackPath = "http://localhost:3000/";
-                config.ClientId = "643158083356-3jde7ohikoat973j5bbkgq0p9c708jqu.apps.googleusercontent.com";
-                config.ClientSecret = "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";
-            })
             .AddJwtBearer(x =>
             {
 

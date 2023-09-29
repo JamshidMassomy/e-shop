@@ -1,5 +1,5 @@
 // react
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 // components
 import { useAuth } from '../../auth/useAuth';
@@ -54,7 +54,10 @@ const Header = () => {
                 <span>{selector?.cart.length || 0}</span>
               </button>
 
-              <div className={`shoping-cart`}>
+              <div
+                className={`shoping-cart`}
+                onClick={() => setIsCartActive(false)}
+              >
                 {isCartActive ? <Cart /> : null}
               </div>
             </div>

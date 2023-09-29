@@ -66,8 +66,6 @@ public static class SwaggerConfiguration
                     new List < string > ()
                 }
         });
-
-            // Maps all structured ids to the guid type to show correctly on swagger
             var allGuids = typeof(IGuid).Assembly.GetTypes().Where(type => typeof(IGuid).IsAssignableFrom(type) && !type.IsInterface)
                 .ToList();
             foreach (var guid in allGuids)
@@ -82,13 +80,6 @@ public static class SwaggerConfiguration
 
     public static IApplicationBuilder UseSwaggerSetup(this IApplicationBuilder app)
     {
-        // Configure the HTTP request pipeline.
-        /*if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-        */
         app.UseSwagger()
             .UseSwaggerUI(c =>
             {

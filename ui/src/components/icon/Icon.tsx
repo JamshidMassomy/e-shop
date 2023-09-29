@@ -4,6 +4,7 @@ export interface IIcon {
   size?: any;
   color?: string;
   icon?: string;
+  onClick?: () => any;
 }
 
 const Icon = (props: IIcon) => {

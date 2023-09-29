@@ -1,14 +1,14 @@
 import toast from 'react-hot-toast';
-import { API_BASE_URL } from '../util/Constants';
+import { API_BASE_URL, ERROR_LABLES } from '../util/Constants';
 
 export const _fetch = (url: string, options: any = {}) => {
   return new Promise((resolve, reject) => {
     const fetchData = {
       method: options?.method || 'GET',
       headers: {
-        Authentication: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
         Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
       },
       body: options.body ? JSON.stringify(options.body) : undefined,
     };
@@ -29,7 +29,7 @@ export const _fetch = (url: string, options: any = {}) => {
         }
       })
       .catch(() => {
-        toast('Something went wrong.');
+        toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
       });
   });
 };

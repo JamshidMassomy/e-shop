@@ -34,6 +34,8 @@ export const ITEM_LABELS = {
 
 export const ERROR_LABLES = {
   SOMETHING_WENT_WRONG: 'Something went wrong or server is not responding',
+  FAILED_LOGIN: 'Unable to authenticate or Invalid login',
+  VALIDATION_ERROR: 'One or more validation error occured',
 };
 
 export const ITEM_LABLES = {

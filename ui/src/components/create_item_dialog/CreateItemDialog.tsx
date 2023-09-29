@@ -9,6 +9,8 @@ import { IItem } from '../../types';
 // api
 import { _fetch } from '../../api/api.config';
 import toast from 'react-hot-toast';
+import Dialog from '../dialog/Dialog';
+import { ERROR_LABLES, LABELS } from '../../util/Constants';
 
 const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   const [isActive, setIsActive] = useState<boolean>();
@@ -52,12 +54,12 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
           toast('Saved Item succesfully');
         })
         .catch(() => {
-          toast('Unable to save item');
+          toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         });
       refresh();
     } else {
       reset();
-      toast('One or more validation error occured');
+      toast(ERROR_LABLES.VALIDATION_ERROR);
     }
   };
 
@@ -81,8 +83,8 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   };
 
   return (
-    <div className={`item-dialog ${isActive ? 'open' : ''}`}>
-      <div className="dialog-content">
+    <>
+      <Dialog isActive={isActive} handClose={handleClose}>
         <div className="dialog-header">
           <h2>Add Item</h2>
         </div>
@@ -115,8 +117,8 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
             <Button onClick={handleSubmit} label="Save" />
           </div>
         </div>
-      </div>
-    </div>
+      </Dialog>
+    </>
   );
 };
 

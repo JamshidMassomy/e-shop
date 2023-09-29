@@ -1,11 +1,7 @@
-import React from 'react';
-
 // redux
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
-
-// import { showNotification } from '../action/pageAction';
 import { _fetch } from '../api/api.config';
 
 // context
@@ -15,6 +11,7 @@ import { AuthContext } from './AuthContext';
 import { useLocalStorage } from './useLocalStorage';
 import jwtDecode from 'jwt-decode';
 import { IToken } from '../types';
+import { ERROR_LABLES } from '../util/Constants';
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useLocalStorage('user', null);
@@ -45,7 +42,7 @@ export const AuthProvider = ({ children }: any) => {
         toast('Logged in');
       })
       .catch(() => {
-        toast('Unable to authenticate or Invalid login');
+        toast(ERROR_LABLES.FAILED_LOGIN);
       });
   };
 

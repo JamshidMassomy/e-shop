@@ -8,7 +8,6 @@ public class ExceptionHandlerMiddleware : IMiddleware
 {
     
     private readonly ILogger<ExceptionHandlerMiddleware> _logger;
-
     public ExceptionHandlerMiddleware(ILogger<ExceptionHandlerMiddleware> logger)
     {
         _logger = logger;
@@ -22,7 +21,6 @@ public class ExceptionHandlerMiddleware : IMiddleware
         }
         catch (Exception ex)
         {
-            // var exception = ex.Demystify();
             var exception = ex;
 
             _logger.LogError(exception, "An error ocurred: {Message}", exception.Message);
@@ -37,8 +35,6 @@ public class ExceptionHandlerMiddleware : IMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             var result = Result.Error(exception.Message);
-            // var result = Result.Error(exception.ToStringDemystified());
-
             await context.Response.WriteAsJsonAsync(result);
         }
     }
