@@ -7,25 +7,19 @@ namespace Shop.Application.Features.Item.CreateItem
     {
         public CreateItemValidator()
         {
-            /*
+            
             RuleLevelCascadeMode = ClassLevelCascadeMode;
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .MaximumLength(StringSizes.Max);
+                .MaximumLength(25);
 
-            RuleFor(x => x.HeroType)
-                .IsInEnum();
-
-            RuleFor(x => x.Age)
+            RuleFor(x => x.Price)
                 .GreaterThan(0);
 
-            RuleFor(x => x.Nickname)
-                .MaximumLength(StringSizes.Max);
+            RuleFor(x => x.Description)
+                .MaximumLength(255);
 
-            RuleFor(x => x.Team)
-                .MaximumLength(StringSizes.Max);
-            */
         }
     }
 }

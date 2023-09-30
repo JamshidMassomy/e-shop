@@ -4,7 +4,7 @@ using Shop.Application.Common;
 using Shop.Infrastructure.Context;
 using System.Reflection;
 using Shop.Domain.Entities.Common;
-
+using AspNetCoreRateLimit;
 
 namespace Shop.Api.Configuration
 {
@@ -12,6 +12,7 @@ namespace Shop.Api.Configuration
     {
         public static IServiceCollection AddApplicationSetup(this IServiceCollection services)
         {
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddScoped<IContext, ApplicationDbContext>();
             NewId.SetProcessIdProvider(new CurrentProcessIdProvider());
             ApplyAllMappingConfigFromAssembly();

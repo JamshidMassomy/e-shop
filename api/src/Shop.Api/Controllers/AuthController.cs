@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using Shop.Application.Auth;
 using Shop.Application.Features.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
@@ -37,7 +38,8 @@ public class AuthController : ControllerBase
         {
             Audience = new [] { _configuration["Google:ClientId"] }
         };
-        await ValidateAsync(tokenRequest.TokenId, settings); 
+        await ValidateAsync(tokenRequest.tokenId, settings); 
+        var request = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         var jwtToken = await _mediator.Send(new AuthenticateRequest { RequestResult = request });
         return Ok(jwtToken.Value);
         

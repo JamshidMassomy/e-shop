@@ -7,7 +7,6 @@ using Shop.Application.Features.Item;
 using Shop.Application.Features.Item.CreateItem;
 using Shop.Application.Features.Item.DeleteItem;
 using Shop.Application.Features.Item.GetAllItem;
-using Shop.Application.Features.Item.GetItemById;
 using Shop.Application.Features.Item.UpdateItem;
 using Shop.Application.Response;
 using Shop.Domain.Entities.Common;
@@ -27,18 +26,6 @@ namespace Shop.Api.Controllers
             _mediator = mediator;
         }
 
-
-        
-        [HttpGet]
-        [Route("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<Result<ItemResponse>> GetItemById(GetItemByIdRequest Id)
-        {
-            var result = await _mediator.Send(Id);
-            return result;
-
-        }
 
 
         [HttpPost]

@@ -1,17 +1,16 @@
 
+using AspNetCoreRateLimit;
 using Boilerplate.Api.Configurations;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-// builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 
-
-
-
+builder.Services.AddMemoryCache();
+builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+builder.Services.AddInMemoryRateLimiting();
+builder.Services.AddRateLimiterConfiguration();
 builder.Services.AddAuthSetup(builder.Configuration);
 builder.Services.AddControllers(
     options =>
@@ -40,21 +39,15 @@ builder.Services.AddCors(options =>
 });
 
 
-
-
-
-
 var app = builder.Build();
+app.UseIpRateLimiting();
 app.UseHttpsRedirection();
 app.UseRouting();
-
 app.UseCors("AllowAnyOrigin");
-
-
 app.UseAuthentication();
-
 app.UseAuthorization();
 app.UseHttpsRedirection();
+
 app.UseSwaggerSetup();
 app.MapControllers();
 

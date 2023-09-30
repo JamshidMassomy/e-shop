@@ -1,0 +1,39 @@
+version: '3.4'
+
+
+networks:
+  localdev:
+    name: localdev
+
+services:
+  db-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: mssql_server
+    environment:
+      ACCEPT_EULA: "Y"  
+      SA_PASSWORD: "A&VeryComplex123Password"
+    networks:
+      - localdev
+    volumes:
+      - sqlvolume:/var/opt/mssql
+    ports:
+      - "5000:1433"
+    healthcheck:
+      test: ["CMD", "sqlcmd", "-U", "sa", "-P", "A&VeryComplex123Password", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  shop.api:
+    image: ${DOCKER_REGISTRY-}shopapi
+    build:
+      context: .
+      dockerfile: src/Shop.Api/Dockerfile
+    depends_on:
+      - db-server
+    ports:
+      - "8181:8080"
+    networks:
+      - localdev
+
+volumes:
+  sqlvolume:

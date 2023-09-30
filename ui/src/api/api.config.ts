@@ -15,6 +15,9 @@ export const _fetch = (url: string, options: any = {}) => {
     const api = API_BASE_URL + url;
     fetch(api, fetchData)
       .then((response) => {
+        if (response.status === 401) {
+          window.location.href = '/login';
+        }
         if (response.ok) {
           const json = response.json();
           if (json) {

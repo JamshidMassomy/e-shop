@@ -19,6 +19,7 @@ namespace Shop.Application.Features.Item.CreateItem
         public async Task<Result<ItemResponse>> Handle(CreateItemRequest request, CancellationToken cancellationToken)
         {
             var created = request.Adapt<Domain.Entities.Item.Item>();
+            created.CreatedAt = DateTime.UtcNow;
             _context.Items.Add(created);
             await _context.SaveChangesAsync(cancellationToken);
             return created.Adapt<ItemResponse>();

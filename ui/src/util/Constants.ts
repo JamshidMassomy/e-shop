@@ -1,4 +1,4 @@
-export const API_BASE_URL = `https://localhost:7092/api/v1`;
+export const API_BASE_URL = `https://localhost:57844/api/v1`;
 export const SHOW_NOTIFICATION = 'SHOW_ERROR';
 export const HIDE_NOTIFICATION = 'HIDE_ERROR';
 export const CART_ADD = 'CART_ADD';

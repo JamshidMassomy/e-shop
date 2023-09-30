@@ -1,5 +1,4 @@
 // redux
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
 import { _fetch } from '../api/api.config';
@@ -8,19 +7,27 @@ import { _fetch } from '../api/api.config';
 import { AuthContext } from './AuthContext';
 
 // hook
-import { useLocalStorage } from './useLocalStorage';
 import jwtDecode from 'jwt-decode';
 import { IToken } from '../types';
 import { ERROR_LABLES } from '../util/Constants';
 
 export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useLocalStorage('user', null);
-
   const navigate = useNavigate();
-  const dispatch: any = useDispatch();
-
   const isLoggedIn = () => {
-    return localStorage.getItem('token') !== null;
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const decodedToken: any = jwtDecode(token);
+        const currentTime = Math.floor(Date.now() / 1000);
+        if (decodedToken.exp > currentTime) {
+          return true;
+        }
+      } catch (error) {
+        return false;
+      }
+    }
+
+    return false;
   };
 
   const handleSuccessfulLogin = () => {
@@ -52,7 +59,6 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   const value: any = {
-    //  user,
     login,
     logout,
     isLoggedIn,

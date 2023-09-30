@@ -3,6 +3,6 @@ namespace Shop.Application.Auth
 {
     public class TokenRequest
     {
-        public string TokenId { get; set; } = string.Empty;
+        public string tokenId { get; set; } = string.Empty;
     }
 }

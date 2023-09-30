@@ -1,5 +1,5 @@
 /// react
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 // component
 import Input from '../input/Input';
@@ -75,4 +75,4 @@ const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
   );
 };
 
-export default AddCartDialog;
+export default memo(AddCartDialog);
