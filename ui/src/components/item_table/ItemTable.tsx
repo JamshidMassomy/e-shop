@@ -25,14 +25,16 @@ const ItemTable = (props: ItemTableProps) => {
 
         <tbody>
           {dataset?.length == 0 ? (
-            <span>No data avaliable</span>
+            <tr>
+              <td>No data avaliable</td>
+            </tr>
           ) : (
-            dataset?.map((item, index) => {
+            dataset?.map((item) => {
               return (
                 <tr className="cart-item">
                   <td>{item.name}</td>
-                  <td>{item.description}</td>
                   <td> ${item.price} </td>
+                  <td>{item.description}</td>
                   <td>
                     <IconButton
                       onClick={() => update?.(item) as any}

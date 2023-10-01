@@ -5,12 +5,13 @@ interface IInput {
   placeholder?: string;
   value?: any;
   name?: string;
+  type?: any;
   disabled?: any;
   onChange: (event: any) => void;
 }
 
 const Input = (props: IInput) => {
-  const { placeholder, value, onChange, name, disabled } = props;
+  const { placeholder, value, onChange, name, disabled, type } = props;
 
   return (
     <div>
@@ -19,7 +20,7 @@ const Input = (props: IInput) => {
         name={name}
         className="custom-input"
         autoFocus
-        type="text"
+        type={type || 'text'}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

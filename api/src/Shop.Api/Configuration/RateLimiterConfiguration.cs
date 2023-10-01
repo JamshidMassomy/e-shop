@@ -1,6 +1,4 @@
 ﻿using AspNetCoreRateLimit;
-using Microsoft.EntityFrameworkCore;
-using Shop.Infrastructure.Context;
 
 namespace Shop.Api.Configuration
 {

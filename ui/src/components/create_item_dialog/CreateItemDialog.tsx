@@ -10,7 +10,7 @@ import { IItem } from '../../types';
 import { _fetch } from '../../api/api.config';
 import toast from 'react-hot-toast';
 import Dialog from '../dialog/Dialog';
-import { ERROR_LABLES, LABELS } from '../../util/Constants';
+import { ERROR_LABLES, SUCCESS_LABELS } from '../../util/Constants';
 
 const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   const [isActive, setIsActive] = useState<boolean>();
@@ -18,7 +18,7 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   const [item, setItem] = useState<IItem>({
     name: '',
     description: '',
-    price: 0,
+    price: undefined,
   });
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
         body: item,
       })
         .then(() => {
-          toast('Saved Item succesfully');
+          toast(SUCCESS_LABELS.SAVED_SUCCESS);
         })
         .catch(() => {
           toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
@@ -78,32 +78,40 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   };
 
   const reset = () => {
-    setErrors({});
-    setItem({ name: '', price: null, description: '' });
+    setErrors(undefined);
+    setItem({ name: '', price: undefined, description: '' });
   };
 
   return (
     <>
-      <Dialog isActive={isActive} handClose={handleClose}>
+      <Dialog isActive={isActive} handleClose={handleClose}>
         <div className="dialog-header">
           <h2>Add Item</h2>
         </div>
         <div className="dialog-body">
           <div className="dialog-body-row">
             <label>Item Name</label>
-            <Input name="name" onChange={handleChange} />
+            <Input name="name" value={item?.name} onChange={handleChange} />
             {errors.name && <div className="error-message">{errors.name}</div>}
           </div>
           <div className="dialog-body-row">
             <label>Price</label>
-            <Input name="price" onChange={handleChange} />
+            <Input
+              name="price"
+              value={item.price || undefined}
+              onChange={handleChange}
+            />
             {errors.price && (
               <div className="error-message">{errors.price}</div>
             )}
           </div>
           <div className="dialog-body-row">
             <label>Description</label>
-            <Input name="description" onChange={handleChange}></Input>
+            <Input
+              name="description"
+              value={item.description || ''}
+              onChange={handleChange}
+            />
             {errors.description && (
               <div className="error-message">{errors.description}</div>
             )}

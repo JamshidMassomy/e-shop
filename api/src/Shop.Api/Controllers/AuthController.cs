@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 using Shop.Application.Auth;
 using Shop.Application.Features.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;

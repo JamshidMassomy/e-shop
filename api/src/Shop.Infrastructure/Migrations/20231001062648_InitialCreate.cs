@@ -34,9 +34,9 @@ namespace Shop.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "Price", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("28690000-647a-e86a-2cc2-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5758), "Apple Iphone newest product", "Iphone14", 900m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5796) },
-                    { new Guid("28690000-647a-e86a-2cf6-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5799), "Andriod Mobile phone", "Andriod", 800m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5801) },
-                    { new Guid("28690000-647a-e86a-2cfb-08dbc0ffd5ab"), new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5804), "Dell Laptop", "Laptop", 700m, new DateTime(2023, 9, 29, 18, 22, 3, 701, DateTimeKind.Local).AddTicks(5806) }
+                    { new Guid("c44a0000-647a-e86a-38eb-08dbc2476425"), new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4730), "Apple Iphone newest product", "Iphone14", 900m, new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4771) },
+                    { new Guid("c44a0000-647a-e86a-3925-08dbc2476425"), new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4774), "Andriod Mobile phone", "Andriod", 800m, new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4776) },
+                    { new Guid("c44a0000-647a-e86a-392c-08dbc2476425"), new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4781), "Dell Laptop", "Laptop", 700m, new DateTime(2023, 10, 1, 9, 26, 48, 168, DateTimeKind.Local).AddTicks(4782) }
                 });
         }
 

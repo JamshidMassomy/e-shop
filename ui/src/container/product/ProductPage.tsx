@@ -92,7 +92,10 @@ const ProductPage = () => {
       <AddCartDialog
         isOpen={isAddCartOpen}
         item={activeItem}
-        handleClose={() => setIsAddCartOpen(false)}
+        handleClose={() => {
+          setActiveItem(undefined);
+          setIsAddCartOpen(false);
+        }}
       />
       <CreateItemDialog
         handleClose={() => setIsCreateDialogOpen(false)}

@@ -1,5 +1,4 @@
-﻿
-using Shop.Infrastructure.Context;
+﻿using Shop.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
 

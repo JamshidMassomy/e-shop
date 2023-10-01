@@ -1,11 +1,10 @@
 ﻿
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Shop.Domain.Entities.Common;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Reflection;
 
-namespace Boilerplate.Api.Configurations;
+namespace Shop.Api.Configuration;
 
 public static class SwaggerConfiguration
 {

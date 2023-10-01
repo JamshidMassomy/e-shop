@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shop.Application.Auth;
 using System.Text;
 
-namespace Boilerplate.Api.Configurations;
+namespace Shop.Api.Configuration;
 
 public static class AuthenticationConfig
 {

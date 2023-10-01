@@ -1,12 +1,12 @@
 
 using AspNetCoreRateLimit;
-using Boilerplate.Api.Configurations;
+using Shop.Api.Common;
 using Shop.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-
+builder.Services.AddScoped<ExceptionHandlerMiddleware>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
 builder.Services.AddInMemoryRateLimiting();

@@ -9,16 +9,22 @@ import { useDispatch } from 'react-redux';
 import { addCartAction } from '../../action/cartAction';
 import toast, { Toaster } from 'react-hot-toast';
 import Dialog from '../dialog/Dialog';
+import { IItem } from '../../types';
 
 const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
-  const [isActive, setIsActive] = useState<boolean>(isOpen);
+  const [isActive, setIsActive] = useState<boolean>();
   const [quantity, setQuantity] = useState<number>();
+  const [cartItem, setCartItem] = useState<IItem>();
 
   const dispatcher = useDispatch();
 
   useEffect(() => {
     setIsActive(isOpen);
   }, [isOpen]);
+
+  useEffect(() => {
+    setCartItem(item);
+  }, [item]);
 
   const handleChange = (event: any) => {
     const value = event.target.value;
@@ -29,21 +35,20 @@ const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
 
   const handleAddToCart = () => {
     item.quantity = quantity;
-    dispatcher(addCartAction({ item }) as any);
+    dispatcher(addCartAction(item) as any);
     toast(`Added item to the cart`);
     reset();
   };
 
   const reset = () => {
-    console.log('reseting');
-    setQuantity(0);
+    setQuantity(undefined);
     handleClose();
   };
 
   return (
     <>
       <Toaster position="top-right" />
-      <Dialog isActive={isActive} handClose={handleClose}>
+      <Dialog isActive={isActive} handleClose={handleClose}>
         <div className="dialog-header">
           <h2>Add To Cart</h2>
         </div>
@@ -52,14 +57,19 @@ const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
             <label>Item Name</label>
             <Input
               disabled={'disabled'}
-              value={item?.name}
+              value={cartItem?.name}
               name="name"
               onChange={handleChange}
             />
           </div>
           <div className="dialog-body-row">
             <label>Quantity</label>
-            <Input value={quantity} name="quantity" onChange={handleChange} />
+            <Input
+              type={'number'}
+              value={quantity}
+              name="quantity"
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className="dialog-footer">

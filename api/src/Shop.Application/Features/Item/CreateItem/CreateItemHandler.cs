@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Ardalis.Result;
 using Shop.Application.Common;
-
 using Mapster;
 
 

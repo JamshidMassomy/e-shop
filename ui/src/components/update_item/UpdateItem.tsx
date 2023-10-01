@@ -50,7 +50,7 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
 
   return (
     <>
-      <Dialog isActive={isActive} handClose={handleClose}>
+      <Dialog isActive={isActive} handleClose={handleClose}>
         <div className="dialog-header">
           <h2>Update Item</h2>
         </div>

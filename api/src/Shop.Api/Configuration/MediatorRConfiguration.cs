@@ -1,7 +1,4 @@
-﻿
-
-
-using Shop.Application.Common.Behaviors;
+﻿using Shop.Application.Common.Behaviors;
 using Shope.Application;
 
 public static class MediatorRConfiguration
