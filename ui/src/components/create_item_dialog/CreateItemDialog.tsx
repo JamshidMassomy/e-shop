@@ -31,7 +31,6 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
     if (!item.name || item.name.length == 0) {
       newErrors.name = 'Name is required';
     }
-    console.log(item);
     if (!item.price || isNaN(item.price) || item.price < 0) {
       newErrors.price = 'Price must be a valid number';
     }
@@ -39,7 +38,6 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
     if (!item.description || item.description.length === 0) {
       newErrors.description = 'Description is required';
     }
-    console.log(newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };

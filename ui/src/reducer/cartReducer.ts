@@ -4,7 +4,6 @@ import { CART_ADD, CART_REMOVE } from '../util/Constants';
 export default function cartReducer(state = initialState?.item, action: any) {
   switch (action.type) {
     case CART_ADD:
-      console.log(action);
       if (!state?.cart.some((el) => el.id === action.payload.id)) {
         return { ...state, cart: [...state.cart, action.payload] };
       }

@@ -28,7 +28,6 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
       ...prevData,
       [name]: value,
     }));
-    console.log('change', { updatedItem, item });
   };
 
   const handleUpdate = () => {
