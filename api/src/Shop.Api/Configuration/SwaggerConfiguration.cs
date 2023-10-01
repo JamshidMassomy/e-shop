@@ -39,9 +39,6 @@ public static class SwaggerConfiguration
                 c.IncludeXmlComments(xmlPath);
             }
 
-            //c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            // c.OperationFilter<SecurityRequirementsOperationFilter>();
-
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Scheme = "Bearer",

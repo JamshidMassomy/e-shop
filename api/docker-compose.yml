@@ -24,7 +24,7 @@ services:
       timeout: 5s
       retries: 5
   shop.api:
-    image: ${DOCKER_REGISTRY-}shopapi
+    image: ${DOCKER_REGISTRY-}shopapi # OR ULR to docker file from Shop.Api folder
     build:
       context: .
       dockerfile: src/Shop.Api/Dockerfile
