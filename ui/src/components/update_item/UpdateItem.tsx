@@ -7,11 +7,11 @@ import { IItem } from '../../types';
 import { _fetch } from '../../api/api.config';
 import toast from 'react-hot-toast';
 import Dialog from '../dialog/Dialog';
-import { ERROR_LABLES } from '../../util/Constants';
+import { ERROR_LABLES, LABELS, SUCCESS_LABELS } from '../../util/Constants';
 
 const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
-  const [isActive, setIsActive] = useState<boolean>(isOpen);
-  const [updatedItem, setUpdateItem] = useState<IItem>(item);
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const [updatedItem, setUpdateItem] = useState<IItem>();
 
   useEffect(() => {
     setIsActive(isOpen);
@@ -37,13 +37,13 @@ const UpdateItemDialog = ({ handleRefresh, handleClose, isOpen, item }) => {
         body: updatedItem,
       })
         .then(() => {
-          toast('Updated Item');
+          toast(SUCCESS_LABELS.UPDATE_ITEM);
+          handleRefresh();
+          handleClose();
         })
         .catch(() => {
           toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         });
-      handleRefresh();
-      handleClose();
     }
   };
 

@@ -10,6 +10,7 @@ import { addCartAction } from '../../action/cartAction';
 import toast, { Toaster } from 'react-hot-toast';
 import Dialog from '../dialog/Dialog';
 import { IItem } from '../../types';
+import { SUCCESS_LABELS } from '../../util/Constants';
 
 const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
   const [isActive, setIsActive] = useState<boolean>();
@@ -36,7 +37,7 @@ const AddCartDialog: React.FC<any> = ({ isOpen, item, handleClose }: any) => {
   const handleAddToCart = () => {
     item.quantity = quantity;
     dispatcher(addCartAction(item) as any);
-    toast(`Added item to the cart`);
+    toast(SUCCESS_LABELS.ITEM_ADDED_TO_CART);
     reset();
   };
 

@@ -62,12 +62,12 @@ const ProductPage = () => {
       })
         .then(() => {
           toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
+          fetchItems();
         })
         .catch(() => {
           toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         });
     }
-    handleRefresh();
   };
 
   const handleAddToCart = async (item: IItem) => {
@@ -77,13 +77,6 @@ const ProductPage = () => {
 
   const initlizeItem = (item: IItem) => {
     setActiveItem(item);
-  };
-
-  const handleRefresh = async () => {
-    setIsUpdateActive(false);
-    setIsCreateDialogOpen(false);
-    setIsAddCartOpen(false);
-    await fetchItems();
   };
 
   return (
@@ -100,11 +93,17 @@ const ProductPage = () => {
       <CreateItemDialog
         handleClose={() => setIsCreateDialogOpen(false)}
         isOpen={isCreateDialogOpen}
-        handleRefresh={handleRefresh}
+        handleRefresh={() => {
+          fetchItems();
+          setIsCreateDialogOpen(false);
+        }}
       />
       <UpdateItem
         handleClose={() => setIsUpdateActive(false)}
-        handleRefresh={handleRefresh}
+        handleRefresh={() => {
+          setIsUpdateActive(false);
+          fetchItems();
+        }}
         isOpen={isUpdateActive}
         item={activeItem as any}
       />

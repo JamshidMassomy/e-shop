@@ -1,11 +1,6 @@
 export const API_BASE_URL = `https://localhost:50561/api/v1`;
-export const SHOW_NOTIFICATION = 'SHOW_ERROR';
-export const HIDE_NOTIFICATION = 'HIDE_ERROR';
 export const CART_ADD = 'CART_ADD';
 export const CART_REMOVE = 'CART_REMOVE';
-
-export const HIDE_CART_DIALOG = 'HIDE_CART_DIALOG';
-export const SHOW_CART_DIALOG = 'SHOW_CART_DIALOG';
 
 export const OAUTH_CLIENT_ID =
   '643158083356-8vu4sg15h63vc8f1mf0vmij7omdbg5cv.apps.googleusercontent.com';
@@ -19,19 +14,6 @@ export const LABELS = {
   WELCOME_MESSAGE: 'Welcome,',
 };
 
-export const BUTTON_LABELS = {
-  VIEW: 'view',
-  EDIT: 'edit',
-  DELETE: 'Delete',
-};
-
-export const ITEM_LABELS = {
-  NAME: 'Name',
-  QUANTITY: 'Quantity',
-  DESCRIPTION: 'Description',
-  PRICE: 'Price',
-};
-
 export const ERROR_LABLES = {
   SOMETHING_WENT_WRONG: 'Something went wrong or server is not responding',
   FAILED_LOGIN: 'Unable to authenticate or Invalid login',
@@ -40,11 +22,6 @@ export const ERROR_LABLES = {
 
 export const SUCCESS_LABELS = {
   SAVED_SUCCESS: 'Saved successfully',
-};
-
-export const ITEM_LABLES = {
-  NAME: 'Name',
-  PRICE: 'Price',
-  QUANTITY: 'Quanitty',
-  DESCRIPTION: 'Description',
+  UPDATE_ITEM: 'Updated Item',
+  ITEM_ADDED_TO_CART: 'Added item to the cart',
 };

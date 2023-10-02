@@ -50,13 +50,13 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
       })
         .then(() => {
           toast(SUCCESS_LABELS.SAVED_SUCCESS);
+          refresh();
+          reset();
         })
         .catch(() => {
           toast(ERROR_LABLES.SOMETHING_WENT_WRONG);
         });
-      refresh();
     } else {
-      reset();
       toast(ERROR_LABLES.VALIDATION_ERROR);
     }
   };
@@ -76,8 +76,7 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
   };
 
   const reset = () => {
-    setErrors(undefined);
-    setItem({ name: '', price: undefined, description: '' });
+    setItem({ name: '', price: null, description: '' });
   };
 
   return (
@@ -90,15 +89,11 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
           <div className="dialog-body-row">
             <label>Item Name</label>
             <Input name="name" value={item?.name} onChange={handleChange} />
-            {errors.name && <div className="error-message">{errors.name}</div>}
+            {errors.name && <div className="error-message">{errors?.name}</div>}
           </div>
           <div className="dialog-body-row">
             <label>Price</label>
-            <Input
-              name="price"
-              value={item.price || undefined}
-              onChange={handleChange}
-            />
+            <Input name="price" value={item.price} onChange={handleChange} />
             {errors.price && (
               <div className="error-message">{errors.price}</div>
             )}
@@ -107,7 +102,7 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
             <label>Description</label>
             <Input
               name="description"
-              value={item.description || ''}
+              value={item.description}
               onChange={handleChange}
             />
             {errors.description && (
@@ -116,7 +111,10 @@ const CreateItemDialog = ({ isOpen, handleRefresh, handleClose }: any) => {
           </div>
           <div className="dialog-footer">
             <Button
-              onClick={handleClose}
+              onClick={() => {
+                handleClose();
+                reset();
+              }}
               label="Cancel"
               className="cancel-button"
             />
